@@ -1,8 +1,11 @@
 import requests
 import json
+from parsing_olx.pars_olx import *
+
 
 token = '962645516:AAFH_RuwvFilI_bP36TOkwKU66NbdeoBZWY'
 BASE_URL = 'https://api.telegram.org/bot' + token + '/'
+
 
 def get_html():
 	url = BASE_URL + 'getUpdates'
@@ -23,15 +26,20 @@ def get_message():
 
 	return message
 
-#https://api.telegram.org/bot962645516:AAFH_RuwvFilI_bP36TOkwKU66NbdeoBZWY/sendmessage?chat_id=798317922&text=Hi
+
 def send_message(chat_id, text='Wait a second please...'):
 	url = BASE_URL + f'sendmessage?chat_id={chat_id}&text={text}'
 	requests.get(url)
 
 
 def main():
-	chat_id = get_message().get('chat_id')
-	send_message(chat_id, '1234xxx')
+	data = get_message()
+	chat_id = data.get('chat_id')
+
+	if 'квартири' in data.get('text'):
+		advertisements_apartments = parse_olx(base_url, headers)
+		for advertisement in advertisements_apartments:
+			send_message(chat_id, advertisement)
 
 
 if __name__ == '__main__':

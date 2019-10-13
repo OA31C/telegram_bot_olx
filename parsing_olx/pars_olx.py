@@ -61,6 +61,7 @@ def parse_olx(url, headers):
 					pass
 	else:
 		print('Error ' + str(request.status_code))
+
 	return advertisements_apartments
 
 def files_writer(advertisements_apartments):
@@ -72,5 +73,5 @@ def files_writer(advertisements_apartments):
 							a_apartment.get('price'), a_apartment.get('city'),
 							a_apartment.get('date')))
 
-advertisements_apartments = parse_olx(base_url, headers)
-files_writer(advertisements_apartments)
+# advertisements_apartments = parse_olx(base_url, headers)
+# files_writer(advertisements_apartments)
