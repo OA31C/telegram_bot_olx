@@ -72,6 +72,3 @@ def files_writer(advertisements_apartments):
 			a_pen.writerow((a_apartment.get('title'), a_apartment.get('href'), 
 							a_apartment.get('price'), a_apartment.get('city'),
 							a_apartment.get('date')))
-
-# advertisements_apartments = parse_olx(base_url, headers)
-# files_writer(advertisements_apartments)

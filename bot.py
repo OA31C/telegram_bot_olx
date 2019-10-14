@@ -1,4 +1,5 @@
 import requests
+import telegram
 import json
 from parsing_olx.pars_olx import *
 
@@ -32,14 +33,21 @@ def send_message(chat_id, text='Wait a second please...'):
 	requests.get(url)
 
 
+def send_document(chat_id):
+	url = BASE_URL + 'sendDocument';
+	files = {'document': open('parsed_advertisements_apartments.csv', 'rb')}
+	data = {'chat_id' : chat_id}
+	r = requests.post(url, files=files, data=data)
+
+
 def main():
 	data = get_message()
 	chat_id = data.get('chat_id')
 
 	if 'квартири' in data.get('text'):
 		advertisements_apartments = parse_olx(base_url, headers)
-		for advertisement in advertisements_apartments:
-			send_message(chat_id, advertisement)
+		files_writer(advertisements_apartments)
+		send_document(chat_id)
 
 
 if __name__ == '__main__':
